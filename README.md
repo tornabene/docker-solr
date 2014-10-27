@@ -1,0 +1,4 @@
+docker-solr
+===========
+
+docker-solr
