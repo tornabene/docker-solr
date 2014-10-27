@@ -33,10 +33,12 @@ RUN echo 'ntipa:ntipa' |chpasswd
 RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 
+ENV SOLR solr-4.10.1
+
 WORKDIR /opt
-RUN wget http://apache.panu.it/lucene/solr/4.10.1/solr-4.10.1.tgz -O /opt/solr-4.10.1.tgz
-RUN tar -xvf /opt/solr-4.10.1.tgz
-RUN mv  solr-4.10.1 solr
+RUN wget http://apache.panu.it/lucene/solr/4.10.1/$SOLR.tgz -O /opt/solr-$SOLR.tgz
+RUN tar -C /opt --extract --file /opt/$SOLR.tgz
+RUN ln -s /opt/$SOLR /opt/solr
 
 EXPOSE 22
 EXPOSE 8983
