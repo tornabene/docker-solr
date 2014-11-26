@@ -16,7 +16,18 @@ RUN chmod +x /opt/solr.sh
 RUN ls -lah /opt
 RUN tar -C /opt --extract --file /opt/$SOLR.tgz
 RUN ln -s /opt/$SOLR /opt/solr
-RUN whereis java
+
+
+WORKDIR /opt/solr/example/solr
+RUN cp -r collection1/ ntipa/
+
+WORKDIR /opt/solr/example/solr/ntipa
+RUN  echo "name=ntipa" > core.properties
+RUN  cat core.properties
+
+ADD schema.xml /opt/solr/example/solr/ntipa/conf/schema.xml
+RUN rm -f /opt/solr/example/solr/ntipa/data/*
+
 EXPOSE 22
 EXPOSE 8983
 
