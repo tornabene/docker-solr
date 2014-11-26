@@ -10,6 +10,8 @@ ADD solr.conf  /etc/supervisor/conf.d/solr.conf
 
 WORKDIR /opt
 RUN wget http://apache.fastbull.org/lucene/solr/4.10.2/$SOLR.tgz -O /opt/$SOLR.tgz
+ADD solr.sh  /opt/solr.sh
+RUN chmod +x /opt/solr.sh
 
 RUN ls -lah /opt
 RUN tar -C /opt --extract --file /opt/$SOLR.tgz
