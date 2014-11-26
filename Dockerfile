@@ -3,20 +3,16 @@ FROM tornabene/docker-ntipa-base
 MAINTAINER Tindaro Tornabene <tindaro.tornabene@gmail.com>
 
 ENV SOLR solr-4.10.2
-
-
-WORKDIR /etc/supervisor/conf.d
-#ADD solr.conf  /etc/supervisor/conf.d/solr.conf
-
 WORKDIR /opt
 RUN wget http://apache.fastbull.org/lucene/solr/4.10.2/$SOLR.tgz -O /opt/$SOLR.tgz
-ADD solr.sh  /opt/solr.sh
-RUN chmod +x /opt/solr.sh
+
 
 RUN ls -lah /opt
 RUN tar -C /opt --extract --file /opt/$SOLR.tgz
 RUN ln -s /opt/$SOLR /opt/solr
 
+WORKDIR /etc/supervisor/conf.d
+ADD solr.conf  /etc/supervisor/conf.d/solr.conf
 
 WORKDIR /opt/solr/example/solr
 RUN cp -r collection1/ ntipa/
@@ -31,4 +27,4 @@ RUN rm -f /opt/solr/example/solr/ntipa/data/*
 EXPOSE 22
 EXPOSE 8983
 
-CMD /usr/bin/supervisord &&  /opt/solr.sh start
+CMD /usr/bin/supervisord
