@@ -6,7 +6,7 @@ ENV SOLR solr-4.10.2
 
 
 WORKDIR /etc/supervisor/conf.d
-ADD solr.conf  /etc/supervisor/conf.d/solr.conf
+#ADD solr.conf  /etc/supervisor/conf.d/solr.conf
 
 WORKDIR /opt
 RUN wget http://apache.fastbull.org/lucene/solr/4.10.2/$SOLR.tgz -O /opt/$SOLR.tgz
@@ -31,4 +31,4 @@ RUN rm -f /opt/solr/example/solr/ntipa/data/*
 EXPOSE 22
 EXPOSE 8983
 
-CMD ["/usr/bin/supervisord"]
+CMD /usr/bin/supervisord &&  /opt/solr.sh start
